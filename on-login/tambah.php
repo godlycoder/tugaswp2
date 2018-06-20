@@ -18,13 +18,17 @@ include("koneksi.php");
 				$no_telepon		 = $_POST['no_telepon'];
 				$jabatan		 = $_POST['jabatan'];
 				$status			 = $_POST['status'];
+				$nama_gambar = $_FILES['foto']['name'];
+				$file_gambar = $_FILES['foto']['tmp_name'];
+				$directory	 = "images/$nama_gambar";
+				move_uploaded_file($file_gambar, $directory);
 				
 				$cek = mysqli_query($koneksi, "SELECT * FROM karyawan WHERE nik='$nik'");
 
 				if(mysqli_num_rows($cek) == 0){ 
 					if(true){
 						
-						$insert = mysqli_query($koneksi, "INSERT INTO karyawan(nik, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, no_telepon, jabatan, status) VALUES('$nik','$nama', '$jenis_kelamin', '$tempat_lahir', '$tanggal_lahir', '$alamat', '$no_telepon', '$jabatan', '$status')") or die(mysqli_error()); 
+						$insert = mysqli_query($koneksi, "INSERT INTO karyawan(nik, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, no_telepon, jabatan, status, foto) VALUES('$nik','$nama', '$jenis_kelamin', '$tempat_lahir', '$tanggal_lahir', '$alamat', '$no_telepon', '$jabatan', '$status, $nama_gambar')") or die(mysqli_error()); 
 						if($insert){ 
 							echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data Karyawan Berhasil Di Simpan.</div>'; 
 						}else{ 
@@ -109,8 +113,18 @@ include("koneksi.php");
 							<option value="Kontrak">Kontrak</option>
 							<option value="Tetap">Tetap</option>
 						</select>
+
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Foto Profil</label>
+					<div class="col-sm-2">
+             			<input name="foto" class="form-control-file" type="file" id="exampleInputFile"> <br> <br>
+
+					</div>
+				</div>
+
 				<div class="form-group">
 					<label class="col-sm-3 control-label">&nbsp;</label>
 					<div class="col-sm-6">

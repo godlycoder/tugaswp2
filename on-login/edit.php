@@ -25,8 +25,11 @@ include("koneksi.php");
 				$no_telepon		 = $_POST['no_telepon'];
 				$jabatan		 = $_POST['jabatan'];
 				$status			 = $_POST['status'];
+				$file_gambar = $_FILES['gambar']['tmp_name'];
+				$directory	 = "images/$nama_gambar";
+				move_uploaded_file($file_gambar, $directory);
 				
-				$update = mysqli_query($koneksi, "UPDATE karyawan SET nama='$nama', jenis_kelamin='$jenis_kelamin', tempat_lahir='$tempat_lahir', tanggal_lahir='$tanggal_lahir', alamat='$alamat', no_telepon='$no_telepon', jabatan='$jabatan', status='$status' WHERE nik='$nik'") or die(mysqli_error()); 
+				$update = mysqli_query($koneksi, "UPDATE karyawan SET nama='$nama', jenis_kelamin='$jenis_kelamin', tempat_lahir='$tempat_lahir', tanggal_lahir='$tanggal_lahir', alamat='$alamat', no_telepon='$no_telepon', jabatan='$jabatan', status='$status', foto='$nama_gambar' WHERE nik='$nik'") or die(mysqli_error()); 
 				if($update){ 
 					header("Location: edit.php?nik=".$nik."&pesan=sukses"); 
 				}else{ 
@@ -112,7 +115,16 @@ include("koneksi.php");
 							<option value="Kontrak">Kontrak</option>
 							<option value="Tetap">Tetap</option>
 						</select> 
+
+						<div class="col-sm-1">
+							<label for="exampleInputFile">Foto Profil</label> <br>
+             				<input name="gambar" class="form-control-file" type="file" id="exampleInputFile"> <br> <br>
+
+						</div>
 					</div>
+
+
+
                     <div class="col-sm-3">
                     <b>Status Sekarang :</b> <span class="label label-info"><?php echo $row['status']; ?></span>
 				    </div>

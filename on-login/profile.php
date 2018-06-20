@@ -26,7 +26,12 @@ include("koneksi.php");
 				}
 			}
 			?>
-			
+			<div class="panel panel-default">
+       			<div class="panel-heading" style="background-color: #212121">
+         			<div class="text-center">
+           			<img src="images/<?= $row['foto']; ?>" class="img-rounded" width="200" height="200">
+         		</div>
+       		</div>
 			<table class="table table-striped table-condensed">
 				<tr>
 					<th width="20%">NIK</th>
